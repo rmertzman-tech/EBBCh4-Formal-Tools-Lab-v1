@@ -1,412 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Ethics Beyond Boundaries — Course App Suite</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --teal:#0f766e;--teal-dark:#0d5e57;--teal-mid:#14b8a6;--teal-light:#ccfbf1;
-  --amber:#f59e0b;--amber-dark:#92400e;--amber-light:#fef3c7;
-  --navy:#1a2744;--ink:#1f2937;--muted:#6b7280;
-  --border:#e5e7eb;--paper:#f9fafb;
-  --sky:#1e3a8a;--sky-light:#dbeafe;
-  --green:#166534;--green-light:#dcfce7;
-  --red:#dc2626;--red-light:#fee2e2;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Cormorant Garamond','Georgia',serif;background:linear-gradient(135deg,#0a1628 0%,#112240 50%,#0a1628 100%);min-height:100vh;color:var(--ink)}
-.wrap{max-width:1000px;margin:0 auto;padding:1rem 1rem 3rem}
-
-/* HEADER */
-.site-header{text-align:center;padding:2.5rem 1rem 2rem;color:white}
-.site-header .label{font-family:'JetBrains Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;color:rgba(20,184,166,.75);margin-bottom:.5rem}
-.site-header h1{font-size:2.2rem;font-weight:700;color:white;margin-bottom:.4rem;line-height:1.15}
-.site-header .sub{font-size:1rem;color:rgba(255,255,255,.48);font-style:italic;margin-bottom:1rem}
-.site-header .desc{max-width:640px;margin:0 auto;font-size:.9rem;color:rgba(255,255,255,.55);line-height:1.7}
-
-/* CHAPTER GROUPS */
-.chapter-group{margin-bottom:2rem}
-.group-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(20,184,166,.65);margin-bottom:.6rem;padding-left:.1rem}
-.app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.75rem}
-
-/* APP CARDS */
-.app-card{background:white;border-radius:.75rem;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s;box-shadow:0 2px 12px rgba(0,0,0,.15)}
-.app-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.25)}
-.app-card-head{padding:.9rem 1.1rem .7rem;display:flex;align-items:flex-start;gap:.7rem}
-.app-card-icon{font-size:1.5rem;line-height:1;flex-shrink:0;margin-top:.1rem}
-.app-card-title{font-size:1rem;font-weight:700;color:var(--navy);line-height:1.25;margin-bottom:.15rem}
-.app-card-type{font-family:'JetBrains Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
-.app-card-body{padding:0 1.1rem .9rem;flex:1}
-.app-card-desc{font-size:.82rem;color:var(--muted);line-height:1.6}
-.app-card-footer{padding:.55rem 1.1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.app-card-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.06em;padding:.18rem .5rem;border-radius:.25rem}
-.tag-case{background:var(--teal-light);color:var(--teal-dark)}
-.tag-companion{background:var(--sky-light);color:var(--sky)}
-.tag-simulation{background:var(--amber-light);color:var(--amber-dark)}
-.tag-reference{background:var(--paper);color:var(--muted);border:1px solid var(--border)}
-.tag-orientation{background:var(--green-light);color:var(--green)}
-.app-card-arrow{font-size:.9rem;color:var(--teal-mid)}
-
-/* ACCENT BORDERS BY CHAPTER */
-.ch-orient .app-card-head{border-top:3px solid #0284c7}
-.ch-1 .app-card-head{border-top:3px solid #7c3aed}
-.ch-2 .app-card-head{border-top:3px solid #dc2626}
-.ch-3 .app-card-head{border-top:3px solid #0f766e}
-.ch-4 .app-card-head{border-top:3px solid #ca8a04}
-.ch-5 .app-card-head{border-top:3px solid #166534}
-.ch-6 .app-card-head{border-top:3px solid #0369a1}
-.ch-7 .app-card-head{border-top:3px solid #9333ea}
-.ch-8 .app-card-head{border-top:3px solid #92400e}
-.ch-9 .app-card-head{border-top:3px solid #0891b2}
-.ch-10 .app-card-head{border-top:3px solid #4f46e5}
-.ch-interlude .app-card-head{border-top:3px solid #0d5e57}
-.ch-rustbelt .app-card-head{border-top:3px solid #b45309}
-.ch-prologue .app-card-head{border-top:3px solid #6d28d9}
-.ch-11 .app-card-head{border-top:3px solid #0f766e}
-.ch-12 .app-card-head{border-top:3px solid #dc2626}
-.ch-13 .app-card-head{border-top:3px solid #1d4ed8}
-.ch-14 .app-card-head{border-top:3px solid #7c3aed}
-.ch-tools .app-card-head{border-top:3px solid #374151}
-
-/* DIVIDER */
-.divider{height:1px;background:rgba(255,255,255,.07);margin:1.5rem 0}
-
-/* PREDICTION CHAIN */
-.chain-bar{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:.65rem;padding:1rem 1.25rem;margin-bottom:1.5rem}
-.chain-bar h3{font-size:.75rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:rgba(20,184,166,.65);margin-bottom:.65rem}
-.chain-row{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
-.chain-node{font-family:'JetBrains Mono',monospace;font-size:.65rem;background:rgba(255,255,255,.07);color:rgba(255,255,255,.65);padding:.22rem .55rem;border-radius:.3rem;white-space:nowrap}
-.chain-arrow{color:rgba(20,184,166,.5);font-size:.85rem}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chapter 4 Formal Tools Lab</title>
+  <style>
+    :root{--bg:#f7faf9;--panel:#ffffff;--ink:#18302f;--muted:#5c706e;--accent:#1f766e;--accent2:#e3f3f0;--line:#cfe3df;--warn:#fff6df;--danger:#fbe8e8;--ok:#e9f7ed;--shadow:0 8px 24px rgba(16,42,39,.09)}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#eef8f5,#f7faf9 260px);color:var(--ink);line-height:1.55}
+    header{padding:28px 18px 18px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.78);position:sticky;top:0;z-index:5;backdrop-filter:blur(8px)}
+    .wrap{max-width:1100px;margin:0 auto}.title{display:flex;gap:14px;align-items:center;flex-wrap:wrap}.badge{background:var(--accent2);color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-weight:700;font-size:.83rem}h1{font-size:clamp(1.6rem,3vw,2.55rem);margin:0} h2{margin:0 0 10px;font-size:1.35rem} h3{margin:14px 0 8px;font-size:1.06rem}.sub{color:var(--muted);max-width:850px;margin:8px 0 0}.grid{display:grid;grid-template-columns:280px 1fr;gap:18px;margin:22px auto;padding:0 18px}.nav{position:sticky;top:105px;align-self:start;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:var(--shadow)}.nav button{width:100%;text-align:left;border:0;background:transparent;padding:10px;border-radius:12px;color:var(--ink);cursor:pointer;font-weight:650}.nav button:hover,.nav button.active{background:var(--accent2);color:var(--accent)}.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:20px;margin:0 0 18px;box-shadow:var(--shadow)}.notice{border-left:5px solid var(--accent);background:var(--accent2);padding:12px 14px;border-radius:14px;margin:12px 0}.privacy{background:#f0f7ff;border-left-color:#3570a3}.small{font-size:.92rem;color:var(--muted)}label{display:block;font-weight:750;margin:14px 0 6px}textarea,input,select{width:100%;border:1px solid #bdd3cf;border-radius:13px;padding:11px 12px;font:inherit;background:#fff;color:var(--ink)}textarea{min-height:92px;resize:vertical}.short{min-height:54px}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}button.action{border:0;border-radius:14px;background:var(--accent);color:#fff;padding:10px 14px;font-weight:800;cursor:pointer}button.secondary{background:#eaf2f1;color:var(--ink);border:1px solid var(--line)}button.danger{background:#a63d3d}.pillrow{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid var(--line);border-radius:999px;background:#fff;padding:6px 9px;font-size:.85rem}.metric{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px;margin:10px 0;background:#fbfefd}.metric input{accent-color:var(--accent)}.result{border-radius:18px;padding:15px;margin-top:14px;border:1px solid var(--line);background:#fbfefd}.bar{height:13px;border-radius:999px;background:#e6eeee;overflow:hidden;margin:8px 0}.fill{height:100%;width:0;background:linear-gradient(90deg,#80bcb4,#1f766e);transition:width .25s}.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}.quote{font-size:1.05rem;background:#fffdf4;border:1px solid #eadcaa;border-left:5px solid #c4a14a;border-radius:14px;padding:14px}.footer{padding:20px 18px 36px;color:var(--muted);text-align:center}@media(max-width:850px){.grid{grid-template-columns:1fr}.nav{position:static}.row,.two{grid-template-columns:1fr}header{position:static}}
+    @media print{header,.nav,.actions,.no-print{display:none!important}.grid{display:block;padding:0}.card{box-shadow:none;break-inside:avoid}body{background:#fff}}
+  </style>
 </head>
 <body>
-<div class="wrap">
+<header><div class="wrap"><div class="title"><span class="badge">C4-FTM-E v1</span><h1>Chapter 4 Formal Tools Lab</h1></div><p class="sub">An EBB Fall 2026 private workbook app for studying formal tools, models, complexity, formal domination, the Phenomenological Veto, and public reasoning.</p></div></header>
+<div class="wrap grid">
+  <nav class="nav no-print" aria-label="Lab navigation">
+    <button class="active" data-jump="orient">1. Orientation</button><button data-jump="model">2. Model vs. Reality</button><button data-jump="audit">3. Formal Domination Audit</button><button data-jump="veto">4. Phenomenological Veto</button><button data-jump="sage">5. SAGE + Repair</button><button data-jump="bridge">6. Public Reasoning Bridge</button><button data-jump="mccts">7. MCCTS Starter</button><button data-jump="export">8. Export / Receipt</button>
+  </nav>
+  <main>
+    <section id="orient" class="card">
+      <h2>1. Orientation: Formal Tools Are Powerful and Dangerous</h2>
+      <div class="notice privacy"><strong>Private by default.</strong> This page does not upload, grade, or store your responses anywhere outside this browser. You may save, print, copy, clear, or export your notes. Share only what you decide is appropriate for your course context.</div>
+      <p>These workbook apps are your private thinking space. The Navigator is a longer-term journal that can connect your thinking across the course. The export button creates a private file you can bring into the Navigator whenever you are ready — nothing is sent automatically.</p>
+      <div class="quote"><strong>Chapter 4 central question:</strong> When does a model help ethical perception, and when does it replace ethical perception?</div>
+      <label for="studentName">Optional name or course identifier for receipt</label><input id="studentName" data-key="studentName" placeholder="Optional" />
+      <label for="firstReaction">Name one formal tool you encounter in school, work, healthcare, finance, law, technology, or daily life.</label><textarea id="firstReaction" data-key="firstReaction" placeholder="Examples: grade, rubric, risk score, diagnosis, algorithmic recommendation, policy checklist, productivity metric..."></textarea>
+      <p class="small"><strong>Formal tool:</strong> any model, score, label, rule, checklist, category, chart, procedure, or system used to organize information or guide decisions.</p>
+    </section>
 
-<div class="site-header">
-  <div class="label">Saint Petersburg College &middot; Ethics Institute</div>
-  <h1>Ethics Beyond Boundaries</h1>
-  <div class="sub">Interactive App Suite &middot; Dr. Robert Mertzman</div>
-  <div class="desc">A complete set of simulation apps, case explorers, and companion reading tools for the EBB course. Each app connects to the UCP simulation engine and stores journal predictions for the next chapter.</div>
+    <section id="model" class="card">
+      <h2>2. Model vs. Lived Reality</h2>
+      <p>A good model reveals patterns. A dangerous model hides what matters and becomes hard to challenge.</p>
+      <div class="two"><div><h3>What the tool helps reveal</h3><textarea id="revealsQuick" data-key="revealsQuick"></textarea></div><div><h3>What lived reality may exceed the tool</h3><textarea id="exceedsQuick" data-key="exceedsQuick"></textarea></div></div>
+      <label for="modelScore">How much authority does the formal tool currently have?</label><input id="modelScore" data-key="modelScore" type="range" min="0" max="100" value="50" />
+      <label for="challengeScore">How easy is it for affected persons to challenge or correct the tool?</label><input id="challengeScore" data-key="challengeScore" type="range" min="0" max="100" value="50" />
+      <div class="result"><strong>Formal domination risk estimate:</strong><div class="bar"><div id="riskFill" class="fill"></div></div><div id="riskText" class="small"></div></div>
+    </section>
+
+    <section id="audit" class="card">
+      <h2>3. Formal Domination Audit</h2>
+      <div class="notice"><strong>Formal Domination:</strong> when a label, score, model, rule, or category becomes more powerful than the real person or situation it was supposed to help us understand.</div>
+      <label for="formalTool">1. What formal tool, label, metric, category, or procedure is being used?</label><textarea id="formalTool" data-key="formalTool" class="short"></textarea>
+      <label for="whatReveals">2. What does it help people see?</label><textarea id="whatReveals" data-key="whatReveals"></textarea>
+      <label for="whatHides">3. What might it hide?</label><textarea id="whatHides" data-key="whatHides"></textarea>
+      <label for="whoBenefits">4. Who benefits from this representation?</label><textarea id="whoBenefits" data-key="whoBenefits"></textarea>
+      <label for="whoMisdescribed">5. Who might be misdescribed or harmed by it?</label><textarea id="whoMisdescribed" data-key="whoMisdescribed"></textarea>
+      <label for="challengeAvailable">6. Can affected persons challenge, correct, or revise it?</label><textarea id="challengeAvailable" data-key="challengeAvailable"></textarea>
+      <label for="vetoReality">7. What lived reality should have veto power if the model misdescribes the person or situation?</label><textarea id="vetoReality" data-key="vetoReality"></textarea>
+      <label for="redesign">8. How could the tool be redesigned to support agency rather than dominate it?</label><textarea id="redesign" data-key="redesign"></textarea>
+    </section>
+
+    <section id="veto" class="card">
+      <h2>4. Phenomenological Veto Check</h2>
+      <div class="notice"><strong>Phenomenological Veto:</strong> If a model, score, label, or category seriously misdescribes a person’s lived reality, the model should be questioned and revised.</div>
+      <label for="vetoStatus">Does the formal tool misdescribe lived reality in a morally important way?</label><select id="vetoStatus" data-key="vetoStatus"><option value="">Choose one</option><option>No, it seems useful and corrigible.</option><option>Maybe; it needs more evidence or affected-person input.</option><option>Yes; it should be revised.</option><option>Yes; it should be suspended or refused.</option><option>I am not sure.</option></select>
+      <label for="vetoReason">Why?</label><textarea id="vetoReason" data-key="vetoReason"></textarea>
+      <label for="neededCorrection">What correction would make it more ethically responsible?</label><textarea id="neededCorrection" data-key="neededCorrection"></textarea>
+    </section>
+
+    <section id="sage" class="card">
+      <h2>5. SAGE + Constructor Repair</h2>
+      <p>Use SAGE to move from noticing the problem to designing better conditions.</p>
+      <label for="sageSee">See: What ethical feature becomes visible when you look beyond the formal tool?</label><textarea id="sageSee" data-key="sageSee"></textarea>
+      <label for="sageAnalyze">Analyze: Who is affected, who has authority, and what conditions shape agency?</label><textarea id="sageAnalyze" data-key="sageAnalyze"></textarea>
+      <label for="sageGenerate">Generate: What repair, redesign, or safeguard could reduce formal domination?</label><textarea id="sageGenerate" data-key="sageGenerate"></textarea>
+      <label for="sageEngage">Engage: What first responsible step could someone take?</label><textarea id="sageEngage" data-key="sageEngage"></textarea>
+      <label for="carryForward">Cross-chapter carry-forward note: What idea from an earlier chapter helps you understand this case?</label><textarea id="carryForward" data-key="carryForward"></textarea>
+    </section>
+
+    <section id="bridge" class="card">
+      <h2>6. Public Reasoning Bridge</h2>
+      <div class="notice privacy">Your private reflection belongs to you. This section helps you decide whether there is a public-facing ethical issue, question, or argument you want to carry forward.</div>
+      <label for="privateNotice">My private reflection helped me notice...</label><textarea id="privateNotice" data-key="privateNotice"></textarea>
+      <label for="publicFraming">For public discussion, I would frame the issue as...</label><textarea id="publicFraming" data-key="publicFraming"></textarea>
+      <label for="framingMatters">This framing matters because...</label><textarea id="framingMatters" data-key="framingMatters"></textarea>
+      <label for="shareChoice">My sharing choice</label><select id="shareChoice" data-key="shareChoice"><option value="keep_private">Keep this private</option><option value="navigator">Carry forward to Navigator</option><option value="class_discussion">Use for class discussion</option><option value="written_work">Use for written work</option><option value="mccts">Use for MCCTS</option><option value="decide_later">Decide later</option></select>
+    </section>
+
+    <section id="mccts" class="card">
+      <h2>7. MCCTS Starter Packet</h2>
+      <p class="small">This packet uses Toulmin vocabulary. It can be copied into MCCTS or used as a public reasoning draft.</p>
+      <label for="claim">Claim</label><textarea id="claim" data-key="claim" class="short"></textarea>
+      <label for="grounds">Grounds</label><textarea id="grounds" data-key="grounds"></textarea>
+      <label for="warrant">Warrant</label><textarea id="warrant" data-key="warrant"></textarea>
+      <label for="backing">Backing</label><textarea id="backing" data-key="backing"></textarea>
+      <div class="row"><div><label for="qualifier">Qualifier</label><textarea id="qualifier" data-key="qualifier" class="short"></textarea></div><div><label for="rebuttal">Rebuttal</label><textarea id="rebuttal" data-key="rebuttal" class="short"></textarea></div></div>
+      <div class="actions"><button class="action secondary" onclick="copyMCCTS()">Copy MCCTS Starter Packet</button></div>
+    </section>
+
+    <section id="export" class="card">
+      <h2>8. Export, Receipt, Print, Clear</h2>
+      <p>The JSON file is created on your device. Nothing is uploaded automatically. You choose whether to save it, import it into the Navigator, submit an engagement receipt, or delete it.</p>
+      <div class="actions"><button class="action" onclick="downloadJSON()">Export Navigator JSON</button><button class="action secondary" onclick="copySummary()">Copy Navigator Summary</button><button class="action secondary" onclick="downloadReceipt()">Download Engagement Receipt</button><button class="action secondary" onclick="window.print()">Print / Save as PDF</button><button class="action danger" onclick="clearWork()">Clear My Responses</button></div>
+      <h3>Engagement receipt preview</h3><pre id="receiptPreview" style="white-space:pre-wrap;background:#f5f8f7;border:1px solid var(--line);border-radius:14px;padding:12px;overflow:auto"></pre>
+      <p class="small">Submit this engagement receipt to Canvas using the assignment submission method specified by your instructor. Unless your instructor gives different directions, copy and paste the receipt into the Canvas text-entry box or attach the downloaded receipt file.</p>
+    </section>
+  </main>
 </div>
-
-<!-- PREDICTION CHAIN -->
-<div class="chain-bar">
-  <h3>Prediction Chain &mdash; Journal Q5 flows chapter to chapter</h3>
-  <div class="chain-row">
-    <span class="chain-node">Orientation → orient_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch2 → ch2_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch3 → ch3_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch4 → ch4_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch5 → ch5_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch6 → ch6_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch7 → ch7_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch8 → ch8_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Rust Belt → rust_belt_cq5</span>
-  </div>
-</div>
-
-<!-- ORIENTATION -->
-<div class="chapter-group ch-orient">
-  <div class="group-label">Orientation</div>
-  <div class="app-grid">
-    <a class="app-card" href="ebb-orientation-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🗺️</div><div><div class="app-card-title">Course Orientation</div><div class="app-card-type">Interactive Map</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The watershed model, PRF Peak Calculator, course arc, and Journal Q4 prediction for Chapter 2. Start here before Chapter 1.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-orientation">Orientation</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="day1-orientation.html">
-      <div class="app-card-head"><div class="app-card-icon">📋</div><div><div class="app-card-title">Day 1 Orientation</div><div class="app-card-type">First Class</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">First-day introduction to the course framework, PRF concept, and OS1/OS2 distinction.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-orientation">Day 1</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 1 -->
-<div class="chapter-group ch-1">
-  <div class="group-label">Chapter 1 &mdash; The PRF</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter1-lens-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🔭</div><div><div class="app-card-title">Your Interpretive Lens</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Build your Phenomenological Reference Framework. How your PRF formed, what it makes visible, and what it makes hard to see.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 2 -->
-<div class="chapter-group ch-2">
-  <div class="group-label">Chapter 2 &mdash; The Challenger Disaster</div>
-  <div class="app-grid">
-    <a class="app-card" href="challenger-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">🚀</div><div><div class="app-card-title">Challenger Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Roger Boisjoly and the suppression gap. Eight tabs: Discovery through Aftermath. UCP Simulation: Config A (Thiokol) vs. Config B (protected channel). Clickable metric explanations.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter2-telescope-app.html">
-      <div class="app-card-head"><div class="app-card-icon">📡</div><div><div class="app-card-title">Chapter 2 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The suppression gap concept, institutional architecture, and the ethics of speaking truth to power.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 3 -->
-<div class="chapter-group ch-3">
-  <div class="group-label">Chapter 3 &mdash; Father Hanna</div>
-  <div class="app-grid">
-    <a class="app-card" href="hanna-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">⛪</div><div><div class="app-card-title">Hanna Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Father Saad Sirop Hanna — maintaining identity under maximum institutional entropy. Identity Kernel, BioBond, and the limits of individual courage.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter3-commonwealth-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🏛️</div><div><div class="app-card-title">Chapter 3 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Building commonwealth across difference. The conditions for ethical functioning under extreme constraint.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 4 -->
-<div class="chapter-group ch-4">
-  <div class="group-label">Chapter 4 &mdash; Wangari Maathai</div>
-  <div class="app-grid">
-    <a class="app-card" href="maathai-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">🌳</div><div><div class="app-card-title">Maathai Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Wangari Maathai and the Green Belt Movement. Coordination architecture, OS2 Bridge, and building institutions that outlast their founders.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter4-maathai-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🌿</div><div><div class="app-card-title">Chapter 4 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Institutional design, capability-based coordination, and the ethics of building structures that distribute agency.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 5 -->
-<div class="chapter-group ch-5">
-  <div class="group-label">Chapter 5 &mdash; Nelson Mandela</div>
-  <div class="app-grid">
-    <a class="app-card" href="mandela-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">⚖️</div><div><div class="app-card-title">Mandela Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Nelson Mandela and the TRC. Three simulation runs: the TRC design, the fragmentation counterfactual, and the vulnerable population test.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter5-mandela-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🕊️</div><div><div class="app-card-title">Chapter 5 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Truth, reconciliation, and institutional design across radical difference. The TRC as a coordination architecture problem.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 6 -->
-<div class="chapter-group ch-6">
-  <div class="group-label">Chapter 6 &mdash; Tim Palmer</div>
-  <div class="app-grid">
-    <a class="app-card" href="palmer-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">🌀</div><div><div class="app-card-title">Palmer Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Tim Palmer and ensemble forecasting. Single-model vs. ensemble architecture. The moral argument for honest uncertainty. Three simulation runs.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter6-companion.html">
-      <div class="app-card-head"><div class="app-card-icon">📊</div><div><div class="app-card-title">Chapter 6 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The primacy of doubt. Chaos, uncertainty, and the ethics of what forecasting institutions owe the people who depend on them.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 7 -->
-<div class="chapter-group ch-7">
-  <div class="group-label">Chapter 7 &mdash; Doyne Farmer</div>
-  <div class="app-grid">
-    <a class="app-card" href="farmer-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">🏭</div><div><div class="app-card-title">Farmer Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Doyne Farmer and agent-based economics. Three runs: Representative Agent, Heterogeneous Agents, Rawlsian Test. The COVID prediction and what standard models missed.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter7-farmer-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🔬</div><div><div class="app-card-title">Chapter 7 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The invisible people. Representative agent error, heterogeneous modeling, social block fields, and the Rawlsian test. Your field map exercise.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 8 -->
-<div class="chapter-group ch-8">
-  <div class="group-label">Chapter 8 &mdash; The Simulated History of Ethics</div>
-  <div class="app-grid">
-    <a class="app-card" href="ethical-theories-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🏛️</div><div><div class="app-card-title">Ethical Theories App</div><div class="app-card-type">Nine Stations + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">What were the traditions actually measuring? Nine stations from Socrates to Existentialism. Conditions Cascade visualization. Composite Run with all nine conditions. The Complex PRF.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 9 -->
-<div class="chapter-group ch-9">
-  <div class="group-label">Chapter 9 &mdash; The World Values Map</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter9-wvm-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127758;</div><div><div class="app-card-title">Where Are You Standing?</div><div class="app-card-type">Cultural PRF &middot; Cross-Cultural Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The World Values Map applied to the simulation. Two axes, five worldview categories, the thermodynamic logic of why values shift with conditions, IPS-WVM connection, and AMC forward pointer.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 10 -->
-<div class="chapter-group ch-10">
-  <div class="group-label">Chapter 10 &mdash; The Social Contract</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter10-social-contract-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#x2696;&#xFE0F;</div><div><div class="app-card-title">Who Gave Them the Right?</div><div class="app-card-type">Three Architectures &middot; IPS Profiles &middot; Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Hobbes, Locke, and Rousseau as institutional architectures mapped to IPS parameters. Characteristic failure mode per architecture. CPG five criteria as IPS requirements. The Hybrid Citizen framework.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- INTERLUDE -->
-<div class="chapter-group ch-interlude">
-  <div class="group-label">Interlude &mdash; Ethics of the Framework</div>
-  <div class="app-grid">
-    <a class="app-card" href="interlude-ethics-framework-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#9651;</div><div><div class="app-card-title">Ethics of the Framework</div><div class="app-card-type">Agency Conditions Principle &middot; Bridge Reading</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The normative core stated in full: ACP, entropy-exporting institutions, Coherence-Preserving Governance, temporal commons, and the six-question diagnostic for the applied sequence ahead.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Reading</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- RUST BELT -->
-<div class="chapter-group ch-rustbelt">
-  <div class="group-label">Rust Belt Case Study &mdash; Nine Lenses Applied</div>
-  <div class="app-grid">
-    <a class="app-card" href="rust-belt-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127981;</div><div><div class="app-card-title">Rust Belt &mdash; Nine Ethical Lenses</div><div class="app-card-type">Case Study + Three-Part Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The Rust Belt collapse examined through all nine ethical traditions simultaneously. Pre-collapse, collapse, and current state metrics. The synthesis tab shows what no single lens can see alone.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Study</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<!-- APPLIED SEQUENCE -->
-<div class="chapter-group ch-prologue">
-  <div class="group-label">Prologue &mdash; The Pattern Beneath Ethics</div>
-  <div class="app-grid">
-    <a class="app-card" href="prologue-pattern-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127381;</div><div><div class="app-card-title">The Pattern Beneath Ethics</div><div class="app-card-type">Scale-Free Laws &middot; Agential Hijacking &middot; Course Map</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The scale-invariant mechanism underlying every chapter: parasitic overwrite operating identically at biological, psychological, institutional, and civilizational scales. The mantis case. Course architecture revealed.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Prologue</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<div class="chapter-group ch-11">
-  <div class="group-label">Chapter 11 &mdash; Economic Systems (Applied Sequence &middot; Movement 1)</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter11-economic-systems-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127970;</div><div><div class="app-card-title">What the Economy Does to Coherent Agency</div><div class="app-card-type">IPS Diagnostic &middot; BioBond &middot; Peterson et al. 2025</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The False Choice thesis. Nine fairness dimensions as IPS parameters. Florida nursing home ownership archetypes (Peterson/AARP 2025 &amp; CMS data). PE acquisition trajectory 2019&ndash;2024. BioBond instruments. True Solvency Accounting. Three economic architecture simulation configs.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation + IPS</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<div class="chapter-group ch-12">
-  <div class="group-label">Chapter 12 &mdash; Governance Systems (Applied Sequence &middot; Movement 2)</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter12-governance-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127981;</div><div><div class="app-card-title">Governance Systems and the Routing Quality Gap</div><div class="app-card-type">Four Configs &middot; Boisjoly T4 &middot; Type 1/Type 2 Failure</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Procedural vs. substantive legitimacy. Config A (Captured), B (Coherence-Preserving), C (Reform Transition), D (Boisjoly T4: agent FHRI 82, absorbed 67.7 pts). Type 1 vs. Type 2 routing quality failure distinction.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<div class="chapter-group ch-13">
-  <div class="group-label">Chapter 13 &mdash; Information Systems (Applied Sequence &middot; Movement 3)</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter13-infosystems-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#128225;</div><div><div class="app-card-title">Information Systems and the Second Filter</div><div class="app-card-type">Web of Acquisition &middot; &sigma;/&mu; Filter Asymmetry &middot; AI Ethics</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The filter upstream of governance. CSER Cambridge web of acquisition framework. IPS mechanism of filter asymmetry: &sigma; (morphic residue) and &mu; (incentive misalignment). Why 80% structural improvement is the honest result. Three simulation configs with IPS profiles.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<div class="chapter-group ch-14">
-  <div class="group-label">Chapter 14 &mdash; Existential Risk (Applied Sequence &middot; Movement 4)</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter14-existential-risk-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127759;</div><div><div class="app-card-title">Existential Risk, Leverage, and the AMC</div><div class="app-card-type">IPS Field Profiles &middot; Iron Cage &middot; T1/T2 Counterfactuals</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Meadows leverage hierarchy. Iron Cage (high-&sigma;/&rho;) and Obsolescence Trap (high-&epsilon;/&mu;) failure modes. Four-institution IPS field profiles. Trust vector trajectory. T1 vs. T2 intervention types. Paris Agreement analysis. AMC as field architecture.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Multi-Institutional Field</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<!-- REFERENCE TOOLS -->
-<div class="chapter-group ch-tools">
-  <div class="group-label">Reference Tools &amp; Labs</div>
-  <div class="app-grid">
-    <a class="app-card" href="ucp-metrics-reference.html">
-      <div class="app-card-head"><div class="app-card-icon">📐</div><div><div class="app-card-title">UCP Metrics Reference</div><div class="app-card-type">Technical Reference</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Complete technical documentation for every simulation metric: formulas, ranges, research grounding, and parameter interactions.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Reference</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="ucp-student-guide.html">
-      <div class="app-card-head"><div class="app-card-icon">📖</div><div><div class="app-card-title">Student Guide</div><div class="app-card-type">How to Use the Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Plain-language guide to running simulations, reading metrics, and connecting results to the course concepts.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Guide</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="metrics-calibration-lab.html">
-      <div class="app-card-head"><div class="app-card-icon">🧪</div><div><div class="app-card-title">Metrics Calibration Lab</div><div class="app-card-type">Interactive Lab</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Hands-on parameter exploration. Adjust worldview distributions and evidence architectures and watch metrics respond in real time.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Lab</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="worldview-comparison.html">
-      <div class="app-card-head"><div class="app-card-icon">🌐</div><div><div class="app-card-title">Worldview Comparison</div><div class="app-card-type">Reference Tool</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Side-by-side comparison of the five worldview frameworks. What each sees, what each misses, and how they interact in the simulation.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Reference</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="trans-temporal-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">⏳</div><div><div class="app-card-title">Trans-Temporal Explorer</div><div class="app-card-type">Research Tool</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Generational transmission of coordination capacity. How institutional patterns propagate across time and what degrades or improves them.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Research</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="cte-challenge.html">
-      <div class="app-card-head"><div class="app-card-icon">🏈</div><div><div class="app-card-title">CTE Challenge</div><div class="app-card-type">Case Study</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The NFL's CTE crisis as a coordination failure case. Capability-based coordination in practice.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Study</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<div style="text-align:center;padding:2rem 0 1rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.2)">
-  Ethics Beyond Boundaries &middot; Saint Petersburg College &middot; Ethics Institute &middot; &copy; 2026
-</div>
-
-</div>
-</body>
-</html>
+<div class="footer">EBB Digital Ecosystem — Fall 2026 Schema v1.2. Private reflection remains private by default.</div>
+<script>
+(function(){
+  const APP='C4-FTM-E'; const STORE='ebb_c4_ftm_e_v1';
+  const ids=[...document.querySelectorAll('[data-key]')].map(el=>el.id);
+  function now(){return new Date().toISOString();}
+  function val(id){const el=document.getElementById(id);return el?el.value:'';}
+  function save(){const data={}; ids.forEach(id=>data[id]=val(id)); data.updated_at=now(); localStorage.setItem(STORE, JSON.stringify(data)); updateRisk(); updateReceipt();}
+  function load(){try{const data=JSON.parse(localStorage.getItem(STORE)||'{}'); ids.forEach(id=>{const el=document.getElementById(id); if(el && data[id]!==undefined) el.value=data[id];});}catch(e){} updateRisk(); updateReceipt();}
+  function completed(){const tests={orientation:val('firstReaction'), model:val('revealsQuick')||val('exceedsQuick'), formal_domination_audit:val('formalTool')&&val('whatHides'), phenomenological_veto_check:val('vetoStatus')&&val('neededCorrection'), sage_repair:val('sageSee')&&val('sageGenerate'), public_reasoning_bridge:val('publicFraming')&&val('framingMatters'), mccts_starter_packet:val('claim')&&val('grounds')}; return Object.keys(tests).filter(k=>tests[k]);}
+  function buildExport(){const created = JSON.parse(localStorage.getItem(STORE)||'{}').created_at || now(); return {
+    schema_version:'EBB-Fall-2026-v1.2', source_app:APP, app_title:'Chapter 4 Formal Tools Lab', chapter:'4', chapter_title:'Formal Tools, Models, and Complexity', chapter_entry_key:'chapter-4-formal-tools-lab', created_at:created, updated_at:now(),
+    student_control:{private_by_default:true, auto_upload:false, student_chooses_what_to_share:true},
+    chapter_summary:{main_concept:'Formal tools can help ethical perception, but become dangerous when they replace lived reality or become immune to correction.', student_private_summary:val('privateNotice'), student_public_summary:val('publicFraming')},
+    navigator_fields:{field_scan:[val('firstReaction'),val('sageSee')].filter(Boolean), living_threads:[val('carryForward')].filter(Boolean), prf_notes:[], sage_notes:[val('sageSee'),val('sageAnalyze'),val('sageGenerate'),val('sageEngage')].filter(Boolean), constructor_repair_notes:[val('redesign'),val('sageGenerate'),val('neededCorrection')].filter(Boolean), formal_domination_notes:[val('formalTool'),val('whatHides'),val('whoMisdescribed')].filter(Boolean), phenomenological_veto_notes:[val('vetoStatus'),val('vetoReason'),val('neededCorrection')].filter(Boolean)},
+    public_reasoning_bridge:{private_notice_summary:val('privateNotice'), public_framing:val('publicFraming'), why_this_framing_matters:val('framingMatters'), share_choice:val('shareChoice')||'keep_private', student_controlled:true},
+    formal_domination_audit:{formal_tool:val('formalTool'), what_it_reveals:val('whatReveals')||val('revealsQuick'), what_it_hides:val('whatHides')||val('exceedsQuick'), who_benefits:val('whoBenefits'), who_may_be_misdescribed:val('whoMisdescribed'), challenge_or_revision_available:val('challengeAvailable'), veto_relevant_lived_reality:val('vetoReality'), repair_or_redesign:val('redesign')},
+    phenomenological_veto_check:{veto_status:val('vetoStatus'), reason:val('vetoReason'), needed_correction:val('neededCorrection')},
+    cross_chapter_carry_forward:{prior_chapter_connection:'Earlier PRF, SAGE, moral salience, or suppression-gap reflections may help interpret formal tools.', continuity_note:val('carryForward')},
+    mccts_starter_packet:{claim:val('claim')||val('publicFraming'), grounds:val('grounds')||val('whatHides'), warrant:val('warrant'), backing:val('backing'), qualifier:val('qualifier'), rebuttal:val('rebuttal'), public_issue_framing:val('publicFraming')},
+    engagement_receipt:{receipt_id:'C4-'+Date.now(), completed_modules:completed(), navigator_json_exported:true, public_reasoning_bridge_completed:!!(val('publicFraming')&&val('framingMatters')), formal_domination_audit_completed:!!(val('formalTool')&&val('whatHides')), phenomenological_veto_check_completed:!!(val('vetoStatus')&&val('neededCorrection')), created_at:now()}
+  };}
+  function receipt(){const d=buildExport(); return `EBB Engagement Receipt\nChapter: 4 — Formal Tools, Models, and Complexity\nApp: ${APP}\nSchema: EBB-Fall-2026-v1.2\nStudent/Course ID: ${val('studentName')||'(not provided)'}\nCompleted Modules:\n${d.engagement_receipt.completed_modules.map(x=>'- '+x.replaceAll('_',' ')).join('\n') || '- none yet'}\n\nPrivate content included in this receipt: No\nNavigator JSON exported: ${d.engagement_receipt.navigator_json_exported?'Yes':'No'}\nPublic Reasoning Bridge completed: ${d.engagement_receipt.public_reasoning_bridge_completed?'Yes':'No'}\nFormal Domination Audit completed: ${d.engagement_receipt.formal_domination_audit_completed?'Yes':'No'}\nPhenomenological Veto Check completed: ${d.engagement_receipt.phenomenological_veto_check_completed?'Yes':'No'}\nCreated: ${now()}\n`;}
+  function blobDownload(filename, text, type='text/plain'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},300);}
+  window.downloadJSON=function(){blobDownload('C4-FTM-E_chapter4_navigator_export.json', JSON.stringify(buildExport(),null,2), 'application/json'); updateReceipt();}
+  window.downloadReceipt=function(){blobDownload('C4-FTM-E_engagement_receipt.txt', receipt());}
+  window.copySummary=function(){const d=buildExport(); const txt=`Chapter 4 Navigator Summary\nPublic framing: ${d.public_reasoning_bridge.public_framing}\nWhy it matters: ${d.public_reasoning_bridge.why_this_framing_matters}\nFormal tool: ${d.formal_domination_audit.formal_tool}\nWhat it hides: ${d.formal_domination_audit.what_it_hides}\nPhenomenological veto status: ${d.phenomenological_veto_check.veto_status}\nRepair/redesign: ${d.formal_domination_audit.repair_or_redesign||d.phenomenological_veto_check.needed_correction}`; navigator.clipboard.writeText(txt).then(()=>alert('Navigator summary copied.'));}
+  window.copyMCCTS=function(){const d=buildExport().mccts_starter_packet; const txt=`MCCTS Starter Packet\nClaim: ${d.claim}\nGrounds: ${d.grounds}\nWarrant: ${d.warrant}\nBacking: ${d.backing}\nQualifier: ${d.qualifier}\nRebuttal: ${d.rebuttal}\nPublic Issue Framing: ${d.public_issue_framing}`; navigator.clipboard.writeText(txt).then(()=>alert('MCCTS Starter Packet copied.'));}
+  window.clearWork=function(){if(confirm('Clear all saved responses for this app on this browser?')){localStorage.removeItem(STORE); ids.forEach(id=>{const el=document.getElementById(id); if(el) el.value='';}); updateRisk(); updateReceipt();}}
+  function updateRisk(){const authority=Number(val('modelScore')||50); const challenge=Number(val('challengeScore')||50); const risk=Math.max(0,Math.min(100, Math.round((authority*0.65)+((100-challenge)*0.35)))); const fill=document.getElementById('riskFill'); const text=document.getElementById('riskText'); if(fill) fill.style.width=risk+'%'; if(text){let label=risk<35?'Low to moderate risk: the tool seems corrigible.':risk<70?'Moderate risk: examine who can challenge the tool.':'High risk: the tool may be dominating lived reality.'; text.textContent=`${risk}/100 — ${label}`;}}
+  function updateReceipt(){const p=document.getElementById('receiptPreview'); if(p) p.textContent=receipt();}
+  document.querySelectorAll('[data-key]').forEach(el=>{el.addEventListener('input',save); el.addEventListener('change',save);});
+  document.querySelectorAll('[data-jump]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-jump]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById(btn.dataset.jump).scrollIntoView({behavior:'smooth',block:'start'});}));
+  if(!localStorage.getItem(STORE)){localStorage.setItem(STORE,JSON.stringify({created_at:now()}));}
+  load();
+})();
+</script>
+</body></html>
